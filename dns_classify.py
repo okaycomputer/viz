@@ -19,6 +19,10 @@ class DNSClassifier(object):
     for row in self.X_raw:
       feature = {}
       feature['tld'] = row['name'].split('.')[-1]
+      feature['sub_domain'] = len(row['name'].split('.')) > 2
+      int_portion = lambda s: str(int(float(s)))
+      feature['timestamp_hamming'] = sum(c1 != c2 for c1, c2 in itertools.izip(int_portion(row['timestamp']), row['name']))
+      feature['country_code'] = row['country_code'] in ['RU', 'CN', 'RO']
       feature['domain_length'] = len(row['name'])
       feature['rcode'] = row['rcode']
       features.append(feature)
