@@ -27,7 +27,7 @@ class DNSClassifier(object):
       feature['rcode'] = row['rcode']
       features.append(feature)
 
-    self.X = normalize(self.dv.fit_transform(features))
+    self.X = normalize(self.dv.fit_transform(features), axis=0)
 
   def process(self):
     self.results = self.clf.fit_predict(self.X)
